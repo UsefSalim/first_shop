@@ -9,6 +9,10 @@ const path = require('path');
 
 const error = require('./src/middlewares/errors.middleware');
 
+const authRoutes = require('./src/routes/auth.routes');
+const productsRoutes = require('./src/routes/Products.routes');
+const orderRoutes = require('./src/routes/Order.routes');
+
 const accessLogStream = fs.createWriteStream(
   path.join(__dirname, 'access.log'),
   {
@@ -24,6 +28,8 @@ module.exports = (app) => {
   app.get('env') === 'development' &&
     app.use(morgan('combined', { stream: accessLogStream }));
   // Routes
-
+  app.use('/api/v1/auth', authRoutes);
+  app.use('/api/v1/products', productsRoutes);
+  app.use('/ap/v1/order', orderRoutes);
   app.use(error);
 };
