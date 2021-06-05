@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Card, CardMedia, CardContent, CardActions } from "@material-ui/core";
-import { Typography, Button, Grid } from "@material-ui/core";
+import { Card, CardMedia, CardContent } from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 import Ratings from "./Ratings";
 
 const useStyles = makeStyles((theme) => ({

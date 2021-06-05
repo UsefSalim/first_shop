@@ -5,7 +5,7 @@ const Ratings = ({ value, text}) => {
   return (
     <>
       <Rating name="read-only" value={value} precision={0.5} />
-      <Typography variant="p" component="p">{text}</Typography>
+      <Typography variant="body1" component="p">{text}</Typography>
       </>
   )
 }
