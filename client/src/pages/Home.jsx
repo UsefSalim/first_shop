@@ -1,7 +1,9 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux"
+import {listProducts} from '../actions/products.actions'
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Grid } from "@material-ui/core";
-import products from "../products";
+// import products from "../products";
 import Product from "../components/Product";
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -15,7 +17,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles();
-
+  const { products ,login } = useSelector(state => state.productList)
+  const dispatch = useDispatch()
+  React.useEffect(() =>
+  {
+   dispatch(listProducts())
+ },[dispatch])
   return (
     <main className={classes.main}>
       <Container className={classes.cardGrid} maxWidth="lg">

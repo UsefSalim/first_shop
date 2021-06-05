@@ -1,8 +1,6 @@
 const xelor = require('xelor');
 const Order = require('../models/Order.models');
-const {
-  OrderValidations,
-} = require('../validations/Order.validations');
+const { OrderValidations } = require('../validations/Order.validations');
 
 exports.addController = async (req, res) => {
   await xelor.add(req, res, Order, OrderValidations);
