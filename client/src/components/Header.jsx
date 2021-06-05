@@ -30,7 +30,7 @@ const Header = () => {
               ShopingWeb
             </Typography>
             <nav>
-              <IconButton component={Link} to="/shoping" aria-label="delete" className={classes.margin}>
+              <IconButton component={Link} to="/cart" aria-label="delete" className={classes.margin}>
                 <ShoppingCartIcon />
               </IconButton>
             </nav>

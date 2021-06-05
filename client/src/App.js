@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import ProductScreen from "./pages/ProductScreen";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import CartScreen from "./pages/CartScreen";
 const App = () => {
   return (
     <Router>
@@ -11,6 +12,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/product/:id_product" component={ProductScreen} />
+        <Route path="/cart/:id_product?" component={CartScreen} />
       </Switch>
       <Footer />
     </Router>
