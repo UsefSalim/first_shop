@@ -12,7 +12,7 @@ import {
   Typography,
   Divider,
 } from "@material-ui/core";
-import { ListItem, List } from "@material-ui/core";
+import { ListItem, List, Card } from "@material-ui/core";
 import { cyan } from "@material-ui/core/colors";
 // import products from '../products'
 import Ratings from "../components/Ratings";
@@ -87,53 +87,56 @@ const ProductScreen = () =>
             </List>
           </Grid>
           <Grid item lg={3} xs={12}>
-            <List className={classes.root}>
-              <ListItem>
-                <Typography variant="h6" component="p">
-                  Price : ${product.price}
-                </Typography>
-              </ListItem>
-              <Divider />
-              <ListItem>
-                <Typography variant="h6" component="p">
-                  Status :{" "}
-                  {product.countInStock > 0 ? "InStock" : "Out Of Stock"}
-                </Typography>
-              </ListItem>
-              <Divider />
-              {product.countInStock > 0 && (
-                <ListItem>
-                  <InputLabel id="quantiter">Qty : </InputLabel>
-                  <Select
-                    labelId="quantiter"
-                    id="demo-simple-select"
-                    value={qty}
-                    onChange={(e) => {
-                      setQty(e.target.value);
-                    }}
-                    fullWidth
-                  >
-                    {[...Array(product.countInStock).keys()].map((x) => (
-                      <MenuItem key={x + 1} value={x + 1}>
-                        {x + 1}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </ListItem>
-              )}
-              <Divider />
-              <ListItem>
-                <Button
-                  fullWidth
-                  onClick={addToCardHnadler}
-                  size="large"
-                  className={classes.addButton}
-                  disabled={product.countInStock === 0}
-                >
-                  Add To Cart
-                </Button>
-              </ListItem>
-            </List>
+                <Card>
+                  <List className={classes.root}>
+                    <ListItem>
+                      <Typography variant="h6" component="p">
+                        Price : ${product.price}
+                      </Typography>
+                    </ListItem>
+                    <Divider />
+                    <ListItem>
+                      <Typography variant="h6" component="p">
+                        Status :{" "}
+                        {product.countInStock > 0 ? "InStock" : "Out Of Stock"}
+                      </Typography>
+                    </ListItem>
+                    <Divider />
+                    {product.countInStock > 0 && (
+                      <ListItem>
+                        <InputLabel id="quantiter">Qty : </InputLabel>
+                        <Select
+                          labelId="quantiter"
+                          id="demo-simple-select"
+                          value={qty}
+                          onChange={(e) =>
+                          {
+                            setQty(e.target.value);
+                          }}
+                          fullWidth
+                        >
+                          {[...Array(product.countInStock).keys()].map((x) => (
+                            <MenuItem key={x + 1} value={x + 1}>
+                              {x + 1}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </ListItem>
+                    )}
+                    <Divider />
+                    <ListItem>
+                      <Button
+                        fullWidth
+                        onClick={addToCardHnadler}
+                        size="large"
+                        className={classes.addButton}
+                        disabled={product.countInStock === 0}
+                      >
+                        Add To Cart
+                      </Button>
+                    </ListItem>
+                  </List>
+           </Card>
           </Grid>
         </Grid>
       )}

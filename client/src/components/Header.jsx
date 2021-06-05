@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector} from 'react-redux'
 import {Link } from 'react-router-dom'
 import { makeStyles } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
@@ -6,8 +7,10 @@ import { AppBar, Toolbar } from "@material-ui/core";
 import { Typography, Button, Container } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Badge from '@material-ui/core/Badge';
 const Header = () => {
   const classes = useStyles();
+  const { cartItems } = useSelector(state => state.cart)
   return (
     <header>
       <CssBaseline />
@@ -31,7 +34,9 @@ const Header = () => {
             </Typography>
             <nav>
               <IconButton component={Link} to="/cart" aria-label="delete" className={classes.margin}>
-                <ShoppingCartIcon />
+                <Badge color="secondary" badgeContent={cartItems.length}>
+                  <ShoppingCartIcon />
+                </Badge>
               </IconButton>
             </nav>
             <Button
