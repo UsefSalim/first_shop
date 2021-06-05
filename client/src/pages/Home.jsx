@@ -1,9 +1,11 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux"
-import {listProducts} from '../actions/products.actions'
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../actions/products.actions";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Grid } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 // import products from "../products";
+import Message from "../components/Message";
 import Product from "../components/Product";
 const useStyles = makeStyles((theme) => ({
   main: {
@@ -17,21 +19,31 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home() {
   const classes = useStyles();
-  const { products ,login } = useSelector(state => state.productList)
-  const dispatch = useDispatch()
-  React.useEffect(() =>
-  {
-   dispatch(listProducts())
- },[dispatch])
+  const dispatch = useDispatch();
+  const { products, loading, error } = useSelector(
+    (state) => state.productList
+  );
+  React.useEffect(() => {
+    dispatch(listProducts());
+  }, [dispatch]);
   return (
     <main className={classes.main}>
       <Container className={classes.cardGrid} maxWidth="lg">
         <h1>Dernier Produits</h1>
-        <Grid container spacing={4}>
-          {products?.map((product, key) => (
-            <Product {...product} key={key} />
-          ))}
-        </Grid>
+        {loading ? (
+          <CircularProgress color="secondary" />
+        ) : error ? (
+          <Message type="error" title="Error">
+            {" "}
+            {error}
+          </Message>
+        ) : (
+          <Grid container spacing={4}>
+            {products?.map((product, key) => (
+              <Product {...product} key={key} />
+            ))}
+          </Grid>
+        )}
       </Container>
     </main>
   );
