@@ -6,7 +6,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const fs = require('fs');
 const path = require('path');
-
+const { verifIsAuthenticated } = require('./src/middlewares/auth.middlewares');
 const error = require('./src/middlewares/errors.middleware');
 
 const authRoutes = require('./src/routes/auth.routes');
@@ -30,6 +30,7 @@ module.exports = (app) => {
   // Routes
   app.use('/api/v1/auth', authRoutes);
   app.use('/api/v1/products', productsRoutes);
-  app.use('/ap/v1/order', orderRoutes);
+  app.use('/api/v1/order', orderRoutes);
+  app.use('/api/v1/ifauth', verifIsAuthenticated);
   app.use(error);
 };

@@ -8,8 +8,8 @@
     "server": "nodemon server.js",
     "client": "pnpm start --prefix ../client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "data:import":"node seeder.js",
-    "data:destroy":"node seeder.js -d"
+    "data:import": "node seeder.js",
+    "data:destroy": "node seeder.js -d"
   },
   "author": "",
   "license": "ISC",
