@@ -12,8 +12,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import * as yup from 'yup';
-import Alert from '@material-ui/lab/Alert';
+import Message from '../components/Message'
 import { login } from '../actions/user.actions'
+import { green } from '@material-ui/core/colors';
+import { CircularProgress } from '@material-ui/core';
 const validationSchema = yup.object({
   email: yup
     .string('Enter your email')
@@ -28,6 +30,7 @@ export default function Login()
 {
   const classes = useStyles();
   const dispatch = useDispatch()
+  const {error,loading} = useSelector(state=>state.user)
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -51,7 +54,11 @@ export default function Login()
             Sign In
           </Typography>
           <form className={classes.form} onSubmit={formik.handleSubmit} noValidate>
-            {/* {loginError && <Alert color="error">{loginError}</Alert>} */}
+            {error && <Message type="error" title="Error">
+              {" "}
+              {error}
+            </Message>}
+          
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -92,9 +99,11 @@ export default function Login()
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={loading}
             >
               Sign Up
             </Button>
+            {loading && <CircularProgress color="secondary" size={24} className={classes.buttonProgress} />}
             <Grid container justify="flex-end">
               <Grid item>
                 <Link to="/register" variant="body2">
@@ -126,5 +135,13 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   },
 }));

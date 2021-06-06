@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { useDispatch } from 'react-redux';
 import { ifLogin } from './actions/user.actions'
+import ProfileScreen from './pages/ProfileScreen';
 const App = () =>
 {
   const dispatch = useDispatch()
@@ -23,6 +24,7 @@ const App = () =>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/profile" component={ProfileScreen} />
         <Route path="/product/:id_product" component={ProductScreen} />
         <Route path="/cart/:id_product?" component={CartScreen} />
       </Switch>
