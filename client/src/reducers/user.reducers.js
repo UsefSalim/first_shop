@@ -18,7 +18,7 @@ import
 
   } from "../constants/user.constants";
 
-export const userLoginReducer = (state = {  }, action) =>
+export const userLoginReducer = (state = { userInfo:{} }, action) =>
 {
   const { type, payload } = action;
   switch (type)
@@ -28,21 +28,21 @@ export const userLoginReducer = (state = {  }, action) =>
     case USER_LOGOUT_REQUEST:
     case USER_REGISTER_REQUEST:
     case USER_UPDATE_REQUEST:
-      return { loading: true };
+      return {...state, loading: true };
     
     case USER_LOGIN_SUCCESS:
     case USER_IFLOGIN_SUCCESS:
     case USER_LOGOUT_SUCCESS:
     case USER_REGISTER_SUCCESS :
     case USER_UPDATE_SUCCESS :
-      return { loading: false, userInfo: payload };
+      return {...state, loading: false, userInfo: payload };
     
     case USER_LOGIN_FAIL:
     case USER_LOGOUT_FAIL:
     case USER_IFLOGIN_FAIL:
     case USER_REGISTER_FAIL:
     case USER_UPDATE_FAIL:
-      return { loading: false, error: payload };
+      return {...state, loading: false, error: payload };
     default:
       return state;
   }

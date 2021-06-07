@@ -22,6 +22,7 @@ export const ifLogin = () => async (dispatch) => {
       type: USER_IFLOGIN_SUCCESS,
       payload: data,
     });
+    localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
     dispatch({
       type: USER_IFLOGIN_FAIL,
@@ -37,6 +38,7 @@ export const login = (userData) => async (dispatch) => {
       type: USER_LOGIN_SUCCESS,
       payload: data,
     });
+    localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
@@ -70,8 +72,9 @@ export const updateProfile = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_UPDATE_FAIL,
-      payload: error.response?.data?.message || error.message,
+      payload: error.response?.data || error.message,
     });
+    // console.log(error.response.data);
   }
 };
 export const logout = () => async (dispatch) => {
