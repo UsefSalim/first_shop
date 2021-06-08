@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register"
 import ProfileScreen from '../pages/ProfileScreen';
 import ShippingScreen from '../pages/ShippingScreen';
+import PlaceOrderScreen from '../pages/PlaceOrderScreen';
 import { useDispatch, useSelector} from 'react-redux';
 import { ifLogin } from '../actions/user.actions'
 import { AuthRoutes, UserRoutes} from './ProtectedRoutes';
@@ -27,6 +28,7 @@ const Routes = () =>
       <UserRoutes path="/profile" component={ProfileScreen} userInfo={userInfo}/>
       <UserRoutes path="/shipping" component={ShippingScreen} userInfo={userInfo}/>
       <UserRoutes path="/payment" component={PaymentScreen} userInfo={userInfo}/>
+      <UserRoutes path="/placeorder" component={PlaceOrderScreen} userInfo={userInfo}/>
       <Route path="/product/:id_product" component={ProductScreen} />
       <Route path="/cart/:id_product?" component={CartScreen} />
     </Switch>

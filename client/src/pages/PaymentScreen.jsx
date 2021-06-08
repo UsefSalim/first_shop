@@ -17,11 +17,11 @@ const PaymentScreen = () =>
   const [methodePayment, seMethodePayment] = React.useState('paypal');
   const history = useHistory()
   const dispatch = useDispatch()
-  const { AdressInfo, cartItems } = useSelector(state => state.cart)
+  const { AdressInfo } = useSelector(state => state.cart)
   console.log(AdressInfo);
   useEffect(() =>
   {
-    (cartItems.length === 0 || Object.keys(AdressInfo).length === 0) && history.push('/shipping')
+    (Object.keys(AdressInfo).length === 0) && history.push('/shipping')
   })
   const handleChange = (event) => 
   {
@@ -31,7 +31,7 @@ const PaymentScreen = () =>
   {
     e.preventDefault();
     dispatch(saveInfoPayment(methodePayment))
-    history.push('/')
+    history.push('/placeorder')
   }
   return (
     <>

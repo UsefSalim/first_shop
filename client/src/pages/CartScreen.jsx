@@ -135,7 +135,7 @@ const CartScreen = () => {
                     Subtotal (
                     {cartItems.reduce((acc, item) => acc + item.qty, 0)}) items
                     <br />
-                    Totaal Price : $
+                    Total Price : $
                     {cartItems
                       .reduce((acc, item) => acc + item.qty * item.price, 0)
                       .toFixed(2)}

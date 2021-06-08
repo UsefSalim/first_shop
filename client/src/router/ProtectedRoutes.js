@@ -20,7 +20,6 @@ export const AuthRoutes = ({ component: Component, userInfo,...rest }) =>
 }
 export const UserRoutes = ({ component: Component, path, userInfo, ...rest }) =>
 {
-  console.log({ ...rest }, 'rest')
   return (
     <Route
       {...rest}
@@ -35,7 +34,6 @@ export const UserRoutes = ({ component: Component, path, userInfo, ...rest }) =>
 }
 export const AdminRoutes = ({ component: Component, path, userInfo, ...rest }) =>
 {
-
   return (
     <Route
       render={() =>
