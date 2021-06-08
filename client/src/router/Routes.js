@@ -10,6 +10,7 @@ import ShippingScreen from '../pages/ShippingScreen';
 import { useDispatch, useSelector} from 'react-redux';
 import { ifLogin } from '../actions/user.actions'
 import { AuthRoutes, UserRoutes} from './ProtectedRoutes';
+import PaymentScreen from '../pages/PaymentScreen';
 const Routes = () =>
 {
   const dispatch = useDispatch()
@@ -21,10 +22,11 @@ const Routes = () =>
   return (
     <Switch>
       <Route exact path="/" component={Home} />
-      <AuthRoutes exact path="/login" component={Login} userInfo={userInfo}/>
-      <AuthRoutes exact path="/register" component={Register} userInfo={userInfo}/>
-      <UserRoutes exact path="/profile" component={ProfileScreen} userInfo={userInfo}/>
-      <UserRoutes exact path="/shipping" component={ShippingScreen} userInfo={userInfo}/>
+      <AuthRoutes path="/login" component={Login} userInfo={userInfo}/>
+      <AuthRoutes path="/register" component={Register} userInfo={userInfo}/>
+      <UserRoutes path="/profile" component={ProfileScreen} userInfo={userInfo}/>
+      <UserRoutes path="/shipping" component={ShippingScreen} userInfo={userInfo}/>
+      <UserRoutes path="/payment" component={PaymentScreen} userInfo={userInfo}/>
       <Route path="/product/:id_product" component={ProductScreen} />
       <Route path="/cart/:id_product?" component={CartScreen} />
     </Switch>

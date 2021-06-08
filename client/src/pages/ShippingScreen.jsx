@@ -12,6 +12,7 @@ import Container from "@material-ui/core/Container";
 import * as yup from "yup";
 import { saveAdressInfo } from "../actions/cart.actions";
 import CheckoutSteps from './CheckoutSteps';
+import { useHistory } from 'react-router-dom';
 const validationSchema = yup.object({
   adress: yup
     .string("Enter your Adress")
@@ -33,7 +34,12 @@ const validationSchema = yup.object({
 export default function Register({ profile })
 {
   const classes = useStyles();
-  const { AdressInfo } = useSelector((state) => state.cart);
+  const history = useHistory()
+  const { cartItems,AdressInfo } = useSelector((state) => state.cart);
+  useEffect(() =>
+  {
+    (cartItems.length === 0) && history.push('/?cart=empty')
+  })
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -46,14 +52,13 @@ export default function Register({ profile })
     onSubmit: (values) =>
     {
       dispatch(saveAdressInfo(values))
+      history.push('/payment')
+
     },
   });
   return (
     <>
-        {/* <Container component="main" maxWidth="md" >
-
-        <CheckoutSteps />
-        </Container> */}
+          <CheckoutSteps step1 step2 steperValue="1"/>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         
