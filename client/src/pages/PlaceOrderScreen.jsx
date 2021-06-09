@@ -11,6 +11,8 @@ import CheckoutSteps from "./CheckoutSteps";
 import { CssBaseline } from "@material-ui/core";
 import { useHistory, Link } from "react-router-dom";
 import { Avatar } from "@material-ui/core";
+import { createOrder } from "../actions/order.actions";
+import Message from "../components/Message";
 import {
   ListItemText,
   ListItemAvatar,
@@ -20,13 +22,16 @@ import {
 
 const PlaceOrderScreen = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const history = useHistory();
+  const {success,error,order} = useSelector((state) => state.order);
   const cart = useSelector((state) => state.cart);
   const { paymentMode, AdressInfo, cartItems } = cart;
   const { pays, codepostal, ville, adress } = AdressInfo;
   useEffect(() => {
     !paymentMode && history.push("/shipping");
-  });
+     success && history.push(`/order/${order._id}`)
+  }, [success, history, paymentMode, order?._id]);
   //calculate Prices
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
@@ -42,20 +47,23 @@ const PlaceOrderScreen = () => {
     +cart.taxPrice
   ).toFixed(2);
   const placeOrderHandler = () => {
-    // dispatch(
-    //   createOrder({
-    //     orderItems: cart.cartItems,
-    //     shippingAddress: cart.shippingAddress,
-    //     paymentMethod: cart.paymentMethod,
-    //     itemsPrice: cart.itemsPrice,
-    //     shippingPrice: cart.shippingPrice,
-    //     taxPrice: cart.taxPrice,
-    //     totalPrice: cart.totalPrice,
-    //   })
-    // )
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.AdressInfo,
+        paymentMethod: cart.paymentMode,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
   return (
     <>
+      {error && <Message type="error" title="Error">
+        error
+      </Message>}
       <CheckoutSteps step1 step2 step3 step4 steperValue="3" />
       <Container component="main" maxWidth="lg">
         <CssBaseline />

@@ -1,20 +1,15 @@
 const express = require('express');
+const User = require('../models/user.models')
 
 const orderRoutes = express.Router();
 const {
   addController,
-  getAllController,
-  getOneController,
-  deleteOneController,
-  updateOneController,
-  deletAllController,
+  singleOrder
 } = require('../controllers/Order.controllers');
+const { authMiddleware } = require('../middlewares/auth.middlewares')
 
-orderRoutes.get('/', getAllController);
-orderRoutes.delete('/', deletAllController);
-orderRoutes.post('/add', addController);
-orderRoutes.get('/:_id', getOneController);
-orderRoutes.delete('/:_id', deleteOneController);
-orderRoutes.put('/:_id', updateOneController);
+orderRoutes.post('/add', authMiddleware(User, 'User'), addController);
+orderRoutes.get('/:_id', authMiddleware(User, 'User'), singleOrder);
+
 
 module.exports = orderRoutes;
