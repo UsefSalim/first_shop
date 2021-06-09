@@ -36,8 +36,9 @@ const OrderScreen = () => {
     console.log(paymentResult);
     dispatch(payOrder(id_order, paymentResult));
   };
-  const datePay = order?.paidAt.split('T')
-  const heurPay = datePay[1].split('.')[0]
+  // let heurPay
+  // const datePay = order?.paidAt?.split('T')
+  // if(datePay) {heurPay =  datePay[1].split('.')[0]}
   useEffect(() => {
     const addPaypalScript = async () => {
       const { data } = await axios.get("/config/paypal");
@@ -106,7 +107,8 @@ const OrderScreen = () => {
                         Non Payé
                       </Message>
                         ) : (<Message type="success" title="Success" close={true}>
-                            Payé le : {datePay[0]} a {heurPay }
+                            Payé le :{order?.paidAt}
+                            {/* {datePay[0]} a {heurPay} */}
                         </Message>)}
                   </div>
                   <Divider variant="middle" />
