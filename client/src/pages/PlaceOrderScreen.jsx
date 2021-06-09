@@ -17,16 +17,43 @@ import {
   ListItem,
   List,
 } from "@material-ui/core";
+
 const PlaceOrderScreen = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { paymentMode, AdressInfo, cartItems } = useSelector(
-    (state) => state.cart
-  );
+  const cart = useSelector((state) => state.cart);
+  const { paymentMode, AdressInfo, cartItems } = cart;
   const { pays, codepostal, ville, adress } = AdressInfo;
   useEffect(() => {
     !paymentMode && history.push("/shipping");
   });
+  //calculate Prices
+  const addDecimals = (num) => {
+    return (Math.round(num * 100) / 100).toFixed(2);
+  };
+  cart.itemsPrice = addDecimals(
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  );
+  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 10);
+  cart.taxPrice = addDecimals((0.2 * +cart.itemsPrice).toFixed(2));
+  cart.totalPrice = (
+    +cart.itemsPrice +
+    +cart.shippingPrice +
+    +cart.taxPrice
+  ).toFixed(2);
+  const placeOrderHandler = () => {
+    // dispatch(
+    //   createOrder({
+    //     orderItems: cart.cartItems,
+    //     shippingAddress: cart.shippingAddress,
+    //     paymentMethod: cart.paymentMethod,
+    //     itemsPrice: cart.itemsPrice,
+    //     shippingPrice: cart.shippingPrice,
+    //     taxPrice: cart.taxPrice,
+    //     totalPrice: cart.totalPrice,
+    //   })
+    // )
+  };
   return (
     <>
       <CheckoutSteps step1 step2 step3 step4 steperValue="3" />
@@ -57,7 +84,6 @@ const PlaceOrderScreen = () => {
                 <Typography gutterBottom variant="h5">
                   Order Items
                 </Typography>
-
                 <List className={classes.root}>
                   {cartItems.map((item) => (
                     <>
@@ -75,7 +101,7 @@ const PlaceOrderScreen = () => {
                               primary={
                                 <React.Fragment>
                                   <Typography
-                                    variant="h5"
+                                    variant="h6"
                                     color="textSecondary"
                                     className={classes.inline}
                                   >
@@ -94,7 +120,8 @@ const PlaceOrderScreen = () => {
                               color="textSecondary"
                               className={classes.inline}
                             >
-                              {item.price}x{item.qty} = {item.price * item.qty}$
+                              {item.price}x{item.qty} ={" "}
+                              {addDecimals(item.price * item.qty)}$
                             </Typography>
                           </ListItem>
                         </Grid>
@@ -112,12 +139,96 @@ const PlaceOrderScreen = () => {
               color="textSecondary"
               className={classes.inline}
             >
-              Total Price :
+              {/* Total Price :
               {cartItems
                 .reduce((acc, item) => acc + item.qty * item.price, 0)
                 .toFixed(2)}
-              $
+              $ */}
+              Order :
             </Typography>
+
+            <Grid container>
+              <Grid item xs={6}>
+                <Typography
+                  variant="h6"
+                  color="textSecondary"
+                  className={classes.inline}
+                >
+                  Items
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  variant="h6"
+                  color="textSecondary"
+                  className={classes.inline}
+                >
+                  ${cart.itemsPrice}
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  variant="h6"
+                  color="textSecondary"
+                  className={classes.inline}
+                >
+                  Shipping
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  variant="h6"
+                  color="textSecondary"
+                  className={classes.inline}
+                >
+                  ${cart.shippingPrice}
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  variant="h6"
+                  color="textSecondary"
+                  className={classes.inline}
+                >
+                  Tax
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  variant="h6"
+                  color="textSecondary"
+                  className={classes.inline}
+                >
+                  ${cart.taxPrice}
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  variant="h6"
+                  color="textSecondary"
+                  className={classes.inline}
+                >
+                  Total
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  variant="h6"
+                  color="textSecondary"
+                  className={classes.inline}
+                >
+                  ${cart.totalPrice}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Button
+              fullWidth
+              onClick={placeOrderHandler}
+              size="large"
+              className={classes.addButton}
+            >
+              Add To Cart
+            </Button>
           </Grid>
         </Grid>
       </Container>

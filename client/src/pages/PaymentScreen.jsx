@@ -21,7 +21,7 @@ const PaymentScreen = () =>
   console.log(AdressInfo);
   useEffect(() =>
   {
-    (Object.keys(AdressInfo).length === 0) && history.push('/shipping')
+    (!AdressInfo || Object.keys(AdressInfo).length === 0) && history.push('/shipping')
   })
   const handleChange = (event) => 
   {
