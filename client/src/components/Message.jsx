@@ -4,7 +4,7 @@ import Collapse from '@material-ui/core/Collapse';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import CloseIcon from '@material-ui/icons/Close';
 
-const Message = ({children,type,title}) =>
+const Message = ({children,type,title,close}) =>
 {
   const [open, setOpen] = React.useState(true);
   return (
@@ -20,7 +20,7 @@ const Message = ({children,type,title}) =>
               setOpen(false);
             }}
           >
-            <CloseIcon fontSize="inherit" />
+          { !close && <CloseIcon fontSize="inherit" />}
           </IconButton>
         }
       >

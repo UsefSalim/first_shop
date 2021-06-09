@@ -12,6 +12,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import { ifLogin } from '../actions/user.actions'
 import { AuthRoutes, UserRoutes} from './ProtectedRoutes';
 import PaymentScreen from '../pages/PaymentScreen';
+import OrderScreen from '../pages/OrderScreen';
 const Routes = () =>
 {
   const dispatch = useDispatch()
@@ -29,6 +30,7 @@ const Routes = () =>
       <UserRoutes path="/shipping" component={ShippingScreen} userInfo={userInfo}/>
       <UserRoutes path="/payment" component={PaymentScreen} userInfo={userInfo}/>
       <UserRoutes path="/placeorder" component={PlaceOrderScreen} userInfo={userInfo}/>
+      <UserRoutes path="/order/:id_order" component={OrderScreen} userInfo={userInfo}/>
       <Route path="/product/:id_product" component={ProductScreen} />
       <Route path="/cart/:id_product?" component={CartScreen} />
     </Switch>
