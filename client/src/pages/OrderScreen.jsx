@@ -14,6 +14,7 @@ import Message from "../components/Message";
 import axios from "axios";
 import { PayPalButton } from "react-paypal-button-v2";
 import { ORDER_PAY_RESET } from "../constants/order.constants";
+import { resetCard } from "../actions/cart.actions";
 
 import {
   ListItemText,
@@ -36,9 +37,6 @@ const OrderScreen = () => {
     console.log(paymentResult);
     dispatch(payOrder(id_order, paymentResult));
   };
-  // let heurPay
-  // const datePay = order?.paidAt?.split('T')
-  // if(datePay) {heurPay =  datePay[1].split('.')[0]}
   useEffect(() => {
     const addPaypalScript = async () => {
       const { data } = await axios.get("/config/paypal");
@@ -51,14 +49,15 @@ const OrderScreen = () => {
       };
       document.body.appendChild(script);
     };
-    if (!order || successPay) {
+    if (!order || successPay || order._id !== id_order) {
+      dispatch(resetCard());
       dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(id_order));
     } else if (!order.idPad) {
       if (!window.paypal) addPaypalScript();
       else setSdkReady(true);
     }
-  }, [dispatch, id_order, successPay, order]);
+  }, [dispatch, successPay, order, id_order]);
   return (
     <>
       {loading ? (
@@ -106,10 +105,12 @@ const OrderScreen = () => {
                       <Message type="info" title="Info" close={true}>
                         Non Payé
                       </Message>
-                        ) : (<Message type="success" title="Success" close={true}>
-                            Payé le :{order?.paidAt}
-                            {/* {datePay[0]} a {heurPay} */}
-                        </Message>)}
+                    ) : (
+                      <Message type="success" title="Success" close={true}>
+                        Payé le :{order?.paidAt}
+                        {/* {datePay[0]} a {heurPay} */}
+                      </Message>
+                    )}
                   </div>
                   <Divider variant="middle" />
                   <div className={classes.section}>

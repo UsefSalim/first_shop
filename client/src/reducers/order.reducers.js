@@ -8,7 +8,10 @@ const {
   ORDER_PAY_RESET,
   ORDER_PAY_FAIL,
   ORDER_PAY_REQUEST,
-  ORDER_PAY_SUCCESS
+  ORDER_PAY_SUCCESS,
+  ORDER_LIST_FAIL,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
 } = require("../constants/order.constants");
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -60,7 +63,7 @@ export const orderDetailsReducer = (
       return state;
   }
 };
-export const orderPayReducer = (state = {},action) => {
+export const orderPayReducer = (state = {}, action) => {
   const { type, payload } = action;
 
   switch (type) {
@@ -80,6 +83,27 @@ export const orderPayReducer = (state = {},action) => {
       };
     case ORDER_PAY_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+export const orderListReducer = (state = { orders: [] }, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case ORDER_LIST_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_LIST_SUCCESS:
+      return {
+        loading: false,
+        orders: payload,
+      };
+    case ORDER_LIST_FAIL:
+      return {
+        loading: false,
+        error: payload,
+      };
     default:
       return state;
   }

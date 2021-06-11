@@ -6,8 +6,6 @@ const ObjectID = require('mongoose').Types.ObjectId;
 exports.addController = async (req, res) =>
 {
   const currentUser = res.currentUser
-  console.log(currentUser)
-  // await xelor.add(req, res, Order, OrderValidations);
   const {
     orderItems,
     shippingAddress,
@@ -41,9 +39,7 @@ exports.addController = async (req, res) =>
 
 exports.singleOrder = async (req, res) =>
 {
-  // const currentUser = res.currentUser
   const { _id } = req.params
-  console.log(_id);
   if (_id && !ObjectID.isValid(_id))
     return res.status(400).json({ message: `l'ID ${_id} n'est pas valide` });
   const single = await Order.findOne({_id}).populate('user','name email')
@@ -52,7 +48,6 @@ exports.singleOrder = async (req, res) =>
 
 exports.updateOrderPayd = async (req,res)=>{
   const order = await Order.findById(req.params.id)
-  console.log(order,'---------',req.body);
   if(!order) return res.status(400).json('Order Not Found')
     order.isPaid = true
     order.paidAt = Date.now()
@@ -65,4 +60,11 @@ exports.updateOrderPayd = async (req,res)=>{
 
   const updatedOrder = await order.save()
   return res.status(200).json(updatedOrder)
+}
+exports.getUserOrder = async (req, res) =>
+{
+  const {_id} = res.currentUser
+  const orders = await Order.find({ user: _id })
+  return res.status(200).json(orders)
+ 
 }
