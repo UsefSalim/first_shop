@@ -7,7 +7,8 @@ const {
   logoutController,
   updateController,
   getUsersController,
-  deletUsersController
+  deletUsersController,
+  updateUsersController
 } = require('../controllers/auth.controllers');
 
 const {authMiddleware} = require('../middlewares/auth.middlewares')
@@ -18,6 +19,7 @@ authRoutes.get('/logout', logoutController);
 authRoutes.post('/update', authMiddleware(User, 'User'), updateController);
 authRoutes.get('/users', authMiddleware(User, 'Admin'), getUsersController);
 authRoutes.delete('/user/:_id', authMiddleware(User, 'Admin'), deletUsersController);
+authRoutes.put('/user/:_id', authMiddleware(User, 'Admin'), updateUsersController);
 
 module.exports = authRoutes;
  

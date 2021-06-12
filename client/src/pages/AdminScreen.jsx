@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userListe } from "../actions/user.actions";
+import { userListe, userDelete} from "../actions/user.actions";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -30,10 +30,15 @@ const AdminScreen = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { users, loading, error } = useSelector((state) => state.userListe);
+  const { success: deleteSucess } = useSelector(state => state.userDelete)
+  
   useEffect(() => {
     dispatch(userListe());
-  }, [dispatch]);
-  const handelDeleteUser = () => {};
+  }, [dispatch, deleteSucess]);
+  const handelDeleteUser = (id) =>
+  {
+    dispatch(userDelete(id))
+  };
   if (error)
     return (
       <Message type="error" title="Error">
@@ -78,7 +83,7 @@ const AdminScreen = () => {
                       <IconButton
                         aria-label="delete"
                         className={classes.margin}
-                        onClick={handelDeleteUser}
+                        onClick={() => { handelDeleteUser(user._id)}}
                       >
                         <DeleteIcon color="secondary" fontSize="small" />
                       </IconButton>

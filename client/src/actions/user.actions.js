@@ -13,7 +13,8 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
   USER_UPDATE_RESET,
-  USER_LIST_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_RESET
+  USER_LIST_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_RESET,
+  USER_DELETE_FAIL,USER_DELETE_REQUEST,USER_DELETE_SUCCESS
 } from "../constants/user.constants";
 // import { ORDER_LIST_RESET} from '../constants/order.constants'
 export const ifLogin = () => async (dispatch) => {
@@ -113,6 +114,25 @@ export const userListe = () => async (dispatch) => {
         : error.message
     dispatch({
       type:  USER_LIST_FAIL,
+      payload: message
+    });
+  }
+};
+export const userDelete = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_DELETE_REQUEST });
+    const { data } = await axios.delete(`/auth/user/${id}`);
+    dispatch({
+      type: USER_DELETE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data
+        ? error.response.data
+        : error.message
+    dispatch({
+      type:  USER_DELETE_FAIL,
       payload: message
     });
   }

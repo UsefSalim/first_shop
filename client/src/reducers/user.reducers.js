@@ -19,8 +19,10 @@ import
     USER_LIST_FAIL,
     USER_LIST_SUCCESS,
     USER_LIST_REQUEST,
-    USER_LIST_RESET
-
+    USER_LIST_RESET,
+    USER_DELETE_FAIL,
+    USER_DELETE_REQUEST,
+    USER_DELETE_SUCCESS
   } from "../constants/user.constants";
 
 export const userLoginReducer = (state = { userInfo:{} }, action) =>
@@ -33,21 +35,21 @@ export const userLoginReducer = (state = { userInfo:{} }, action) =>
     case USER_LOGOUT_REQUEST:
     case USER_REGISTER_REQUEST:
     case USER_UPDATE_REQUEST:
-      return {...state, loading: true };  
+      return { loading: true };  
     case USER_LOGIN_SUCCESS:
     case USER_IFLOGIN_SUCCESS:
     case USER_LOGOUT_SUCCESS:
     case USER_REGISTER_SUCCESS :
     case USER_UPDATE_SUCCESS :
-      return { ...state, loading: false, error: false , userInfo: payload };
+      return {  loading: false, userInfo: payload };
     case USER_LOGIN_FAIL:
     case USER_LOGOUT_FAIL:
     case USER_IFLOGIN_FAIL:
     case USER_REGISTER_FAIL:
     case USER_UPDATE_FAIL:
-      return {...state, loading: false, error: payload };
+      return { loading: false, error: payload };
     case USER_UPDATE_RESET:
-      return {...state, error : false ,userInfo:{}};
+      return { error : false ,userInfo:{}};
     default:
       return state;
   }
@@ -57,13 +59,27 @@ export const userListReducer = (state = { users: [] }, action) =>
   const { type, payload } = action;
   switch (type) {
     case USER_LIST_REQUEST :
-      return { ...state, loading: true };
+      return { loading: true };
     case USER_LIST_SUCCESS :
-      return { ...state, loading: false,users:payload};
+      return { loading: false,users:payload};
     case USER_LIST_FAIL :
-      return { ...state, loading: false, error: payload };
+      return { loading: false, error: payload };
     case USER_LIST_RESET:
-      return { ...state, loading: false, users:[] };
+      return { loading: false, users:[] };
+    default:
+      return state;
+  }
+}
+export const userDeleteReducer = (state = {}, action) =>
+{
+  const { type, payload } = action;
+  switch (type) {
+    case USER_DELETE_REQUEST :
+      return { loading: true};
+    case USER_DELETE_SUCCESS :
+      return { loading: false , success : true };
+    case USER_DELETE_FAIL :
+      return { loading: false, error: payload };
     default:
       return state;
   }
