@@ -1,4 +1,4 @@
-const { register, login,  ifExist ,getAll} = require('xelor');
+const { register, login,  ifExist ,getAll ,deleteOne} = require('xelor');
 const bcrypt = require('bcrypt');
 const User = require('../models/user.models');
 const {
@@ -46,5 +46,9 @@ exports.updateController = async (req, res) => {
 
 exports.getUsersController = async (req, res) =>
 {
-  await getAll(res,User)
+  await getAll(res,User,null,null,null,'-password')
+}
+exports.deletUsersController = async (req, res) =>
+{
+  await deleteOne(req, res, User)
 }

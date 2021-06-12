@@ -83,13 +83,25 @@ const Header = () => {
                   open={isMenuOpen}
                   onClose={handleMenuClose}
                 >
-                  <MenuItem
-                    component={Link}
-                    to="/profile"
-                    onClick={handleMenuClose}
-                  >
-                    Profile
-                  </MenuItem>
+                  {
+                    userInfo?.role === 'User' ?
+                      (<MenuItem
+                        component={Link}
+                        to="/profile"
+                        onClick={handleMenuClose}
+                      >
+                        Profile
+                      </MenuItem>) :
+                      (
+                        <MenuItem
+                          component={Link}
+                          to="/admin"
+                          onClick={handleMenuClose}
+                        >
+                          Dashboard
+                        </MenuItem>
+                      )
+                  }
                   <MenuItem
                     onClick={() => {
                       handleMenuClose();

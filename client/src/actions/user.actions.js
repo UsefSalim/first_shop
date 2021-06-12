@@ -11,9 +11,11 @@ import {
   USER_LOGOUT_SUCCESS,
   USER_UPDATE_FAIL,
   USER_UPDATE_REQUEST,
-  USER_UPDATE_SUCCESS
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_RESET,
+  USER_LIST_FAIL, USER_LIST_REQUEST, USER_LIST_SUCCESS, USER_LIST_RESET
 } from "../constants/user.constants";
-
+// import { ORDER_LIST_RESET} from '../constants/order.constants'
 export const ifLogin = () => async (dispatch) => {
   try {
     dispatch({ type: USER_IFLOGIN_REQUEST });
@@ -86,10 +88,32 @@ export const logout = () => async (dispatch) => {
       type: USER_LOGOUT_SUCCESS,
       payload: data,
     });
+    dispatch({ type: USER_UPDATE_RESET})
+    // dispatch({ type: ORDER_LIST_RESET})
+    dispatch({ type: USER_LIST_RESET})
   } catch (error) {
     dispatch({
       type: USER_LOGOUT_FAIL,
       payload: error.response?.data?.message || error.message,
+    });
+  }
+};
+export const userListe = () => async (dispatch) => {
+  try {
+    dispatch({ type: USER_LIST_REQUEST });
+    const { data } = await axios.get("/auth/users");
+    dispatch({
+      type: USER_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data
+        ? error.response.data
+        : error.message
+    dispatch({
+      type:  USER_LIST_FAIL,
+      payload: message
     });
   }
 };

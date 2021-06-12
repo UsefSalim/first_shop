@@ -13,6 +13,7 @@ const {
   ORDER_LIST_FAIL,
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
+  ORDER_LIST_RESET
 } = require("../constants/order.constants");
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -109,6 +110,11 @@ export const orderListReducer = (state = { orders: [] }, action) => {
       return {
         loading: false,
         error: payload,
+      };
+    case ORDER_LIST_RESET:
+      return {
+        loading: false,
+        orders: {},
       };
     default:
       return state;

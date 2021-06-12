@@ -25,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
 const ProfileScreen = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { orders } = useSelector((state) => state.orderList);
   useEffect(() => {
     dispatch(listOrder());
   }, [dispatch]);
-  console.log(orders);
+  // console.log(orders);
+  const { orders } = useSelector((state) => state.orderList);
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={4}>
@@ -48,7 +48,7 @@ const ProfileScreen = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders?.map((order) => (
+              {orders && orders.map((order) => (
                 <TableRow key={order._id}>
                   <TableCell component="th" scope="row">
                     {order._id}
