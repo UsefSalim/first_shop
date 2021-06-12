@@ -49,16 +49,20 @@ const Header = () => {
               ShopingWeb
             </Typography>
             <nav>
-              <IconButton
-                component={Link}
-                to="/cart"
-                aria-label="delete"
-                className={classes.margin}
-              >
-                <Badge color="secondary" badgeContent={cartItems.length}>
-                  <ShoppingCartIcon />
-                </Badge>
-              </IconButton>
+              {
+                userInfo?.role !== 'Admin' && (
+                  <IconButton
+                    component={Link}
+                    to="/cart"
+                    aria-label="delete"
+                    className={classes.margin}
+                  >
+                    <Badge color="secondary" badgeContent={cartItems.length}>
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </IconButton>
+                )
+             }
             </nav>
             {userInfo?.isAuthenticated ? (
               <>

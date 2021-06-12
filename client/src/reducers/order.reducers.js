@@ -2,6 +2,7 @@ const {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
+  ORDER_CREATE_RESET,
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
@@ -32,6 +33,11 @@ export const orderCreateReducer = (state = {}, action) => {
       return {
         loading: false,
         error: payload,
+      };
+    case ORDER_CREATE_RESET:
+      return {
+        loading: false,
+        success: false,
       };
     default:
       return state;

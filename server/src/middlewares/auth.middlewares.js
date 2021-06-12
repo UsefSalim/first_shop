@@ -3,8 +3,11 @@ const User = require('../models/user.models');
 
 exports.auth = async (req, res, next) => {
   const token = req.cookies._token;
+
   if (!token) return res.status(400).json({ role: '', isAuthenticated: false });
-  jwt.verify(token, process.env.SECRET_TOKEN, async (err, decodedToken) => {
+  jwt.verify(token, process.env.SECRET_TOKEN, async (err, decodedToken) =>
+  {
+    console.log(err,decodedToken);
     if (err)
       return res
         .clearCookie('_token')
@@ -18,6 +21,7 @@ exports.auth = async (req, res, next) => {
       }).select('-password');
       next();
     }
+    // return res.status(400).json({ role: '', isAuthenticated: false })
   });
 };
 

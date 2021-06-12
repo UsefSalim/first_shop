@@ -2,3 +2,5 @@
 /// affichage des message d'erreur 
      --- id oo pass incorrect login
 // checkout implementation payment paypal or stripe
+
+/// modification nombre de produit pré validation de commande 

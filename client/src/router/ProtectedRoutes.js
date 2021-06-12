@@ -12,7 +12,7 @@ export const AuthRoutes = ({ component: Component, userInfo,...rest }) =>
         ) : userInfo?.isAuthenticated && userInfo?.role === 'User' ? (
             <Redirect to={(location.search?.split('=')[1])||(location.state?.userpath) || 'profile'} />
           ) : userInfo?.isAuthenticated && userInfo?.role === 'Admin' && (
-              <Redirect to={(location.search?.split('=')[1]) ||(location.state?.adminpath) || '/admin'} />
+              <Redirect to={(location.state?.adminpath) || '/admin'} />
         )
       }
     />
@@ -37,7 +37,7 @@ export const AdminRoutes = ({ component: Component, path, userInfo, ...rest }) =
   return (
     <Route
       render={() =>
-        userInfo?.isAuthenticated && userInfo?.roles === 'Admin' ? <Component {...rest} /> : <Redirect to={{
+        userInfo?.isAuthenticated && userInfo?.role === 'Admin' ? <Component {...rest} /> : <Redirect to={{
           pathname: "/",
           state: { adminpath: path }
         }} />

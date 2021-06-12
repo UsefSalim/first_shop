@@ -13,7 +13,7 @@ import { getOrderDetails, payOrder } from "../actions/order.actions";
 import Message from "../components/Message";
 import axios from "axios";
 import { PayPalButton } from "react-paypal-button-v2";
-import { ORDER_PAY_RESET } from "../constants/order.constants";
+import { ORDER_PAY_RESET, ORDER_CREATE_RESET } from "../constants/order.constants";
 import { resetCard } from "../actions/cart.actions";
 
 import {
@@ -50,8 +50,9 @@ const OrderScreen = () => {
       document.body.appendChild(script);
     };
     if (!order || successPay || order._id !== id_order) {
-      dispatch(resetCard());
       dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_CREATE_RESET });
+      dispatch(resetCard());
       dispatch(getOrderDetails(id_order));
     } else if (!order.idPad) {
       if (!window.paypal) addPaypalScript();
